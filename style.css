@@ -56,6 +56,10 @@ main{
     gap: 32px;
 }
 
+main.card-show .container{
+    display: flex;
+}
+
 .card-contato {
     height: 300px;
     width: 250px;
@@ -77,11 +81,14 @@ main{
 form {
     width: 80%;
     margin: auto;
-    display: flex;
+    display: none;
     justify-content: center;
     flex-wrap: wrap;
     gap: 32px;
     padding: 32px;
+}
+main.form-show form{
+    display: flex;
 }
 .preview {
     position: relative;
