@@ -3,6 +3,8 @@
 
 import { getContatos, getContatosPorNome, postContato } from "./contato.js"
 
+import { uploadImageToAzure } from "./uploadImageToAzure.js"
+
 // Cria e exibe um card com as informações de um contato
 function criarCard (contato) {
     const container = document.getElementById('container')
@@ -48,14 +50,27 @@ function voltarHome () {
 
 // Salva um novo contato preenchido no formulário e atualiza a lista
 async function salvarContato () {
+
+    const uploadParams = {
+        file: document.getElementById('foto').files[0],
+        storageAccount: 'uploadimagefernando',
+        sasToken: 'sp=racwl&st=2025-05-15T12:39:57Z&se=2025-05-15T20:39:57Z&sv=2024-11-04&sr=c&sig=MUMuixju3n%2FNyWlaQ6mWlmSD5yVc9nK6Ut%2F4S1zCHds%3D',
+        containerName: 'fotos',
+    };
+
     const contato = {
             "nome": document.getElementById('nome').value,
             "celular": document.getElementById('celular').value,
-            "foto": document.getElementById('foto').value,
+            "foto": await uploadImageToAzure(uploadParams),
             "email": document.getElementById('email').value,
             "endereco": document.getElementById('endereco').value,
             "cidade": document.getElementById('cidade').value
         }
+    
+//////////////////////////////////////////////////////// add image no azure ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+
 
         if (await postContato(contato)){
             await exibirContatos()
